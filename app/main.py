@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, WebSocket, WebSocketDisconnect
 from app.api import auth as auth_router, users as users_router, channels as channels_router
 from app.ws.manager import ConnectionManager
-from app.core.config import settings
+from app.config import settings
 
 app = FastAPI(title="Chat Service API")
 manager = ConnectionManager()
