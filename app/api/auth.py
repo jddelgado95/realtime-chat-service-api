@@ -2,14 +2,16 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from app import models, schemas
+from app import models
+from app import schemas
+from app.schemas.user import User
 from app.db.session import get_db
 from app.core.security import get_password_hash, verify_password, create_access_token
 from app.schemas.auth import Token
 
 router = APIRouter()
 
-@router.post("/signup", response_model=schemas.user.User, status_code=status.HTTP_201_CREATED)
+@router.post("/signup", response_model=User, status_code=status.HTTP_201_CREATED)
 def signup(user_in: schemas.user.UserCreate, db: Session = Depends(get_db)):
     hashed = get_password_hash(user_in.password)
     db_user = models.user.User(email=user_in.email, hashed_password=hashed)
